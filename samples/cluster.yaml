@@ -1,0 +1,7 @@
+apiVersion: clusterregistry.k8s.cisco.com/v1alpha1
+kind: Cluster
+metadata:
+  name: local-cluster
+spec:
+  # clusterID of kube-system namespace
+  clusterID: 995ba61b-0073-4e42-89e2-18282b1801ac
