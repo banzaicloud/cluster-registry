@@ -49,7 +49,8 @@ type ClusterStatus struct {
 	State   ClusterState `json:"state,omitempty"`
 	Message string       `json:"message,omitempty"`
 
-	Type ClusterType `json:"type,omitempty"`
+	Type   ClusterType `json:"type,omitempty"`
+	Leader bool        `json:"leader,omitempty"`
 
 	// Metadata
 	ClusterMetadata `json:",inline"`

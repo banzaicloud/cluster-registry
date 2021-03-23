@@ -140,6 +140,8 @@ spec:
               items:
                 type: string
               type: array
+            leader:
+              type: boolean
             locality:
               properties:
                 region:
