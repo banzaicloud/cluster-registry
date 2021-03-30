@@ -19,8 +19,21 @@ type SyncRule struct {
 }
 
 type Mutations struct {
-	SyncStatus bool                                `json:"syncStatus,omitempty"`
-	Overrides  []resources.K8SResourceOverlayPatch `json:"overrides,omitempty"`
+	Annotations AnnotationMutations                 `json:"annotations,omitempty"`
+	GVK         resources.GroupVersionKind          `json:"groupVersionKind,omitempty"`
+	Labels      LabelMutations                      `json:"labels,omitempty"`
+	Overrides   []resources.K8SResourceOverlayPatch `json:"overrides,omitempty"`
+	SyncStatus  bool                                `json:"syncStatus,omitempty"`
+}
+
+type AnnotationMutations struct {
+	Add    map[string]string `json:"add,omitempty"`
+	Remove []string          `json:"remove,omitempty"`
+}
+
+type LabelMutations struct {
+	Add    map[string]string `json:"add,omitempty"`
+	Remove []string          `json:"remove,omitempty"`
 }
 
 type SyncRuleMatch struct {
@@ -69,12 +82,6 @@ const (
 	AnnotationSelectorOpExists       AnnotationSelectorOperator = "Exists"
 	AnnotationSelectorOpDoesNotExist AnnotationSelectorOperator = "DoesNotExist"
 )
-
-type GroupVersionKind struct {
-	Group   string `json:"group,omitempty"`
-	Version string `json:"version,omitempty"`
-	Kind    string `json:"kind,omitempty"`
-}
 
 type ResourceSyncRuleStatus struct{}
 

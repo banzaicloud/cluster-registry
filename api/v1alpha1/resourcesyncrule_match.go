@@ -8,6 +8,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	runtime "k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	"github.com/banzaicloud/operator-tools/pkg/resources"
@@ -111,25 +112,6 @@ func (m SyncRuleMatch) Match(obj runtime.Object) (bool, error) {
 
 type MatchedRules []SyncRule
 
-func (r MatchedRules) GetOverrides() []resources.K8SResourceOverlayPatch {
-	overrides := make([]resources.K8SResourceOverlayPatch, 0)
-	for _, matchedRule := range r {
-		overrides = append(overrides, matchedRule.Mutations.Overrides...)
-	}
-
-	return overrides
-}
-
-func (r MatchedRules) GetSyncStatus() bool {
-	for _, matchedRule := range r {
-		if matchedRule.Mutations.SyncStatus == true {
-			return true
-		}
-	}
-
-	return false
-}
-
 func (r ResourceSyncRuleSpec) Match(obj runtime.Object) (bool, MatchedRules, error) {
 	matchedRules := make(MatchedRules, 0)
 
@@ -168,6 +150,76 @@ func (r *SyncRule) Match(obj runtime.Object) (bool, error) {
 	}
 
 	return false, nil
+}
+
+func (r MatchedRules) GetMutatedGVK(gvk schema.GroupVersionKind) schema.GroupVersionKind {
+	for _, matchedRule := range r {
+		mGVK := schema.GroupVersionKind(matchedRule.Mutations.GVK)
+		if !mGVK.Empty() {
+			if mGVK.Group != "" {
+				gvk.Group = mGVK.Group
+			}
+			if mGVK.Kind != "" {
+				gvk.Kind = mGVK.Kind
+			}
+			if mGVK.Version != "" {
+				gvk.Version = mGVK.Version
+			}
+		}
+	}
+
+	return gvk
+}
+
+func (r MatchedRules) GetMutationLabels() LabelMutations {
+	m := LabelMutations{
+		Add:    make(map[string]string),
+		Remove: make([]string, 0),
+	}
+
+	for _, matchedRule := range r {
+		for k, v := range matchedRule.Mutations.Labels.Add {
+			m.Add[k] = v
+		}
+		m.Remove = append(m.Remove, matchedRule.Mutations.Labels.Remove...)
+	}
+
+	return m
+}
+
+func (r MatchedRules) GetMutationAnnotations() AnnotationMutations {
+	m := AnnotationMutations{
+		Add:    make(map[string]string),
+		Remove: make([]string, 0),
+	}
+
+	for _, matchedRule := range r {
+		for k, v := range matchedRule.Mutations.Annotations.Add {
+			m.Add[k] = v
+		}
+		m.Remove = append(m.Remove, matchedRule.Mutations.Annotations.Remove...)
+	}
+
+	return m
+}
+
+func (r MatchedRules) GetMutationOverrides() []resources.K8SResourceOverlayPatch {
+	overrides := make([]resources.K8SResourceOverlayPatch, 0)
+	for _, matchedRule := range r {
+		overrides = append(overrides, matchedRule.Mutations.Overrides...)
+	}
+
+	return overrides
+}
+
+func (r MatchedRules) GetMutationSyncStatus() bool {
+	for _, matchedRule := range r {
+		if matchedRule.Mutations.SyncStatus == true {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (s AnnotationSelector) convertMatchExpressions() []metav1.LabelSelectorRequirement {
