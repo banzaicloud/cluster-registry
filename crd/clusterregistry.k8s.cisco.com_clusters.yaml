@@ -9,6 +9,10 @@ metadata:
   name: clusters.clusterregistry.k8s.cisco.com
 spec:
   additionalPrinterColumns:
+  - JSONPath: .spec.clusterID
+    name: ID
+    priority: 1
+    type: string
   - JSONPath: .status.state
     name: Status
     type: string

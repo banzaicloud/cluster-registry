@@ -173,6 +173,37 @@ spec:
                     type: array
                   mutations:
                     properties:
+                      annotations:
+                        properties:
+                          add:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          remove:
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      groupVersionKind:
+                        properties:
+                          group:
+                            type: string
+                          kind:
+                            type: string
+                          version:
+                            type: string
+                        type: object
+                      labels:
+                        properties:
+                          add:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          remove:
+                            items:
+                              type: string
+                            type: array
+                        type: object
                       overrides:
                         items:
                           properties:
