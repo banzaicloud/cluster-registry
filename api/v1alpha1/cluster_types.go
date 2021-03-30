@@ -128,6 +128,7 @@ type ClusterCondition struct {
 // Cluster is the Schema for the clusters API
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:path=clusters,scope=Cluster
+// +kubebuilder:printcolumn:name="ID",type="string",JSONPath=".spec.clusterID",priority=1
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"
 // +kubebuilder:printcolumn:name="Type",type="string",JSONPath=".status.type"
 // +kubebuilder:printcolumn:name="Synced",type="string",JSONPath=".status.conditions[?(@.type==\"ClustersSynced\")].status"
