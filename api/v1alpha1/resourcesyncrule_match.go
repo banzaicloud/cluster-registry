@@ -166,10 +166,13 @@ func (r *SyncRule) Match(obj runtime.Object) (bool, error) {
 	return false, nil
 }
 
-func (r MatchedRules) GetMutatedGVK(gvk schema.GroupVersionKind) schema.GroupVersionKind {
+func (r MatchedRules) GetMutatedGVK(gvk schema.GroupVersionKind) (bool, schema.GroupVersionKind) {
+	var mutated bool
+
 	for _, matchedRule := range r {
 		mGVK := schema.GroupVersionKind(matchedRule.Mutations.GVK)
 		if !mGVK.Empty() {
+			mutated = true
 			if mGVK.Group != "" {
 				gvk.Group = mGVK.Group
 			}
@@ -182,7 +185,7 @@ func (r MatchedRules) GetMutatedGVK(gvk schema.GroupVersionKind) schema.GroupVer
 		}
 	}
 
-	return gvk
+	return mutated, gvk
 }
 
 func (r MatchedRules) GetMutationLabels() LabelMutations {
