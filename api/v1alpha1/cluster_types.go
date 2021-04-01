@@ -80,6 +80,7 @@ type ClusterState string
 const (
 	ClusterStateReady           ClusterState = "Ready"
 	ClusterStateFailed          ClusterState = "Failed"
+	ClusterStateDisabled        ClusterState = "Disabled"
 	ClusterStateMissingAuthInfo ClusterState = "MissingAuthInfo"
 	ClusterStateInvalidAuthInfo ClusterState = "InvalidAuthInfo"
 )

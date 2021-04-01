@@ -22,6 +22,13 @@ import (
 	"github.com/banzaicloud/operator-tools/pkg/types"
 )
 
+const (
+	OwnershipAnnotation       = "cluster-registry.k8s.cisco.com/resource-owner-cluster-id"
+	OriginalGVKAnnotation     = "cluster-registry.k8s.cisco.com/original-group-version-kind"
+	ClusterDisabledAnnotation = "cluster-registry.k8s.cisco.com/cluster-disabled"
+	SyncDisabledAnnotation    = "cluster-registry.k8s.cisco.com/resource-sync-disabled"
+)
+
 type ResourceSyncRuleSpec struct {
 	GVK   resources.GroupVersionKind `json:"groupVersionKind"`
 	Rules []SyncRule                 `json:"rules"`
