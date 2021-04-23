@@ -16,7 +16,7 @@ def pipelinesettings = [
   publishContainer: 0,
   ciscoContainer: 0,
   ecr: 0,
-  publishToArtifactory: 1,
+  publishGoModule: 1,
 
   dockerHub: 0,
   blackduck:0,
