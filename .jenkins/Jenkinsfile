@@ -1,0 +1,29 @@
+@Library(['srePipeline@banzai']) _
+
+def pipelinesettings = [
+  deploy: [
+    []
+  ],
+  tagversion: "${env.BUILD_ID}",
+
+  // Knobs to turn on pipeline stages
+  prepare: 1,
+  unittest: 0,
+  build: 1,
+  publishHelm: 0,
+  useMultipleHelm: 0,
+  helmS3Private: 0,
+  publishContainer: 0,
+  ciscoContainer: 0,
+  ecr: 0,
+  publishGoModule: 1,
+
+  dockerHub: 0,
+  blackduck:0,
+  pushPublicRegistryOnTag: 0,
+  preDeployE2E: 0,
+  deployHelm: 0,
+  sonarQube: 0
+]
+
+srePipeline( pipelinesettings )
