@@ -8,8 +8,8 @@ def pipelinesettings = [
 
   // Knobs to turn on pipeline stages
   prepare: 1,
-  unittest: 0,
-  build: 1,
+  unittest: 1,
+  build: 0, 
   publishHelm: 0,
   useMultipleHelm: 0,
   helmS3Private: 0,
