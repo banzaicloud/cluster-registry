@@ -23,7 +23,7 @@ def pipelinesettings = [
   pushPublicRegistryOnTag: 0,
   preDeployE2E: 0,
   deployHelm: 0,
-  sonarQube: 0
+  sonarQube: 1 
 ]
 
 srePipeline( pipelinesettings )
