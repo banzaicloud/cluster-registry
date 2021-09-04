@@ -37,11 +37,30 @@ type NamespacedName struct {
 	Namespace string `json:"namespace,omitempty"`
 }
 
+type KubernetesAPIEndpoint struct {
+	// The network name of the client to match whether if it should
+	// use the corresponding server address.
+	// +optional
+	ClientNetwork string `json:"clientNetwork,omitempty"`
+	// Address of this server, suitable for a client that matches the clientNetwork if specified.
+	// This can be a hostname, hostname:port, IP or IP:port.
+	ServerAddress string `json:"serverAddress,omitempty"`
+	// CABundle contains the certificate authority information.
+	// +optional
+	CABundle []byte `json:"caBundle,omitempty"`
+}
+
 // ClusterSpec defines the desired state of Cluster
 type ClusterSpec struct {
 	// UID of the kube-system namespace
 	ClusterID types.UID `json:"clusterID"`
-	AuthInfo  AuthInfo  `json:"authInfo,omitempty"`
+	// AuthInfo holds information that describes how a client can get
+	// credentials to access the cluster.
+	AuthInfo AuthInfo `json:"authInfo,omitempty"`
+	// KubernetesAPIEndpoints represents the endpoints of the API server for this
+	// cluster.
+	// +optional
+	KubernetesAPIEndpoints []KubernetesAPIEndpoint `json:"kubernetesApiEndpoints,omitempty"`
 }
 
 // ClusterStatus defines the observed state of Cluster
