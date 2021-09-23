@@ -61,7 +61,7 @@ type SyncRuleMatch struct {
 	Annotations []AnnotationSelector   `json:"annotations,omitempty"`
 	Content     []ContentSelector      `json:"content,omitempty"`
 	Labels      []metav1.LabelSelector `json:"labels,omitempty"`
-	Namespaces  []string               `json:"namespaces"`
+	Namespaces  []string               `json:"namespaces,omitempty"`
 	ObjectKey   types.ObjectKey        `json:"objectKey,omitempty"`
 }
 
