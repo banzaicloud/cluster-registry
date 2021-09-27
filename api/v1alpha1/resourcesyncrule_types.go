@@ -110,7 +110,7 @@ type ResourceSyncRuleStatus struct{}
 
 // ResourceSyncRule is the Schema for the resource sync rule API
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:path=resourcesyncrules,scope=Cluster
+// +kubebuilder:resource:path=resourcesyncrules,scope=Cluster,shortName=rsr
 type ResourceSyncRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
