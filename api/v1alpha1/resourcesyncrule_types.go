@@ -30,8 +30,15 @@ const (
 )
 
 type ResourceSyncRuleSpec struct {
-	GVK   resources.GroupVersionKind `json:"groupVersionKind"`
-	Rules []SyncRule                 `json:"rules"`
+	ClusterFeatureMatches []ClusterFeatureMatch      `json:"clusterFeatureMatch,omitempty"`
+	GVK                   resources.GroupVersionKind `json:"groupVersionKind"`
+	Rules                 []SyncRule                 `json:"rules"`
+}
+
+type ClusterFeatureMatch struct {
+	FeatureName      string                            `json:"featureName,omitempty"`
+	MatchLabels      map[string]string                 `json:"matchLabels,omitempty"`
+	MatchExpressions []metav1.LabelSelectorRequirement `json:"matchExpressions,omitempty"`
 }
 
 type SyncRule struct {
