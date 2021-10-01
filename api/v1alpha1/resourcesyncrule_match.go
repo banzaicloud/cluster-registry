@@ -170,7 +170,7 @@ func (r MatchedRules) GetMutatedGVK(gvk schema.GroupVersionKind) (bool, schema.G
 	var mutated bool
 
 	for _, matchedRule := range r {
-		mGVK := schema.GroupVersionKind(matchedRule.Mutations.GVK)
+		mGVK := schema.GroupVersionKind(matchedRule.Mutations.GetGVK())
 		if !mGVK.Empty() {
 			mutated = true
 			if mGVK.Group != "" {
@@ -195,10 +195,10 @@ func (r MatchedRules) GetMutationLabels() LabelMutations {
 	}
 
 	for _, matchedRule := range r {
-		for k, v := range matchedRule.Mutations.Labels.Add {
+		for k, v := range matchedRule.Mutations.GetLabels().Add {
 			m.Add[k] = v
 		}
-		m.Remove = append(m.Remove, matchedRule.Mutations.Labels.Remove...)
+		m.Remove = append(m.Remove, matchedRule.Mutations.GetLabels().Remove...)
 	}
 
 	return m
@@ -211,10 +211,10 @@ func (r MatchedRules) GetMutationAnnotations() AnnotationMutations {
 	}
 
 	for _, matchedRule := range r {
-		for k, v := range matchedRule.Mutations.Annotations.Add {
+		for k, v := range matchedRule.Mutations.GetAnnotations().Add {
 			m.Add[k] = v
 		}
-		m.Remove = append(m.Remove, matchedRule.Mutations.Annotations.Remove...)
+		m.Remove = append(m.Remove, matchedRule.Mutations.GetAnnotations().Remove...)
 	}
 
 	return m

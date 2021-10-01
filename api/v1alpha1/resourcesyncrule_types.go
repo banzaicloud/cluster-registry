@@ -30,8 +30,15 @@ const (
 )
 
 type ResourceSyncRuleSpec struct {
-	GVK   resources.GroupVersionKind `json:"groupVersionKind"`
-	Rules []SyncRule                 `json:"rules"`
+	ClusterFeatureMatches []ClusterFeatureMatch      `json:"clusterFeatureMatch,omitempty"`
+	GVK                   resources.GroupVersionKind `json:"groupVersionKind"`
+	Rules                 []SyncRule                 `json:"rules"`
+}
+
+type ClusterFeatureMatch struct {
+	FeatureName      string                            `json:"featureName,omitempty"`
+	MatchLabels      map[string]string                 `json:"matchLabels,omitempty"`
+	MatchExpressions []metav1.LabelSelectorRequirement `json:"matchExpressions,omitempty"`
 }
 
 type SyncRule struct {
@@ -40,11 +47,35 @@ type SyncRule struct {
 }
 
 type Mutations struct {
-	Annotations AnnotationMutations                 `json:"annotations,omitempty"`
-	GVK         resources.GroupVersionKind          `json:"groupVersionKind,omitempty"`
-	Labels      LabelMutations                      `json:"labels,omitempty"`
+	Annotations *AnnotationMutations                `json:"annotations,omitempty"`
+	GVK         *resources.GroupVersionKind         `json:"groupVersionKind,omitempty"`
+	Labels      *LabelMutations                     `json:"labels,omitempty"`
 	Overrides   []resources.K8SResourceOverlayPatch `json:"overrides,omitempty"`
 	SyncStatus  bool                                `json:"syncStatus,omitempty"`
+}
+
+func (m Mutations) GetGVK() resources.GroupVersionKind {
+	if m.GVK != nil {
+		return *m.GVK
+	}
+
+	return resources.GroupVersionKind{}
+}
+
+func (m Mutations) GetAnnotations() AnnotationMutations {
+	if m.Annotations != nil {
+		return *m.Annotations
+	}
+
+	return AnnotationMutations{}
+}
+
+func (m Mutations) GetLabels() LabelMutations {
+	if m.Labels != nil {
+		return *m.Labels
+	}
+
+	return LabelMutations{}
 }
 
 type AnnotationMutations struct {
