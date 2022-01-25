@@ -1,5 +1,5 @@
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
-CRD_OPTIONS ?= "crd:trivialVersions=true,preserveUnknownFields=false"
+CRD_OPTIONS ?= "crd"
 REPO_ROOT=$(shell git rev-parse --show-toplevel)
 
 .PHONY: ensure-tools
