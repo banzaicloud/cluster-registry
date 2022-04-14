@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/banzaicloud/operator-tools v0.21.0
-	github.com/tidwall/gjson v1.9.3
+	github.com/tidwall/gjson v1.14.0
 	k8s.io/api v0.19.7
 	k8s.io/apimachinery v0.19.7
 	sigs.k8s.io/controller-runtime v0.6.2
