@@ -1,3 +1,6 @@
+> :warning: **This repo is archived! Go to**: https://github.com/cisco-open/cluster-registry-controller :warning:
+
+
 # Cluster Registry
 
 This repository defines a lightweight Kubernetes Custom Resource Definition API
